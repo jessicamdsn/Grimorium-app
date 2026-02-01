@@ -16,6 +16,8 @@
 }
 
 @theme inline {
+  --color-grimorium: #9660B4;
+  --color-grimoriumhover: #56246A;
   --color-background: var(--background);
   --color-darkerbackground: var(--darkerbackground);
   --color-bginside: var(--bginside);
