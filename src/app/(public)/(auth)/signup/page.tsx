@@ -1,10 +1,61 @@
+"use client";
 
-export default function HomePage() {
+import { useState } from "react";
+import { useAuth } from "@/src/contexts/AuthContexts";
+import Image from "next/image";
+
+export default function SignupPage() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const { login } = useAuth();
+
+  // const handleSubmit = async (e: React.FormEvent) => {
+  //   e.preventDefault();
+  //   await login(email, password);
+  // };
+
   return (
-    <div className="p-8">
-      <h1 className="text-2xl font-bold">Cadastro</h1>
-      <p className=" mt-2">
-      </p>
+    <div className="flex min-h-screen items-center justify-center">
+      <form
+        onSubmit={handleSubmit}
+        className="w-full max-w-md p-8 space-y-6 border bg-background border-zinc-800 rounded-2xl shadow-2xl"
+      >
+        <Image src="/grimorium-logo.png" alt="Grimorium" width={120} height={120} className="mx-auto my-0" />
+        <p className="text-zinc-400 text-center text-sm">Entre para acessar seu grimório</p>
+
+        <div className="space-y-4">
+          <div>
+            <label className="block text-sm font-medium text-foreground">E-mail</label>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full mt-1 px-4 py-2 bg-zinc-800 border border-zinc-700 text-white rounded-lg focus:ring-2 focus:ring-grimorium outline-none transition-all"
+              placeholder="seu@email.com"
+              required
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-foreground">Senha</label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full mt-1 px-4 py-2 bg-zinc-800 border border-zinc-700 text-white rounded-lg focus:ring-2 focus:ring-grimorium outline-none transition-all"
+              placeholder="••••••••"
+              required
+            />
+          </div>
+        </div>
+
+        <button
+          type="submit"
+          className="w-full py-3 bg-grimorium hover:bg-grimoriumhover text-white font-bold rounded-lg shadow-lg shadow-indigo-500/20 transition-all active:scale-95"
+        >
+          Entrar na plataforma
+        </button>
+      </form>
     </div>
   );
 }
