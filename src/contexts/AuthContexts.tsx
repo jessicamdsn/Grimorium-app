@@ -3,22 +3,24 @@
 import { createContext, useContext, useState, ReactNode, useEffect } from "react";
 import { authService } from "@/src/services/authService";
 import { useRouter } from "next/navigation";
-
-// 1. Definimos o que o nosso "Service" global vai guardar
+import Modal from "../components/shared/Modal";
 interface AuthContextType {
-  user: any; // Depois podemos trocar 'any' por uma Interface de Usuário
+  user: any;
   login: (email: string, pass: string) => Promise<void>;
   logout: () => void;
+  signup: (name: string, email: string, pass: string) => Promise<void>;
   isAuthenticated: boolean;
 }
 
-// 2. Criamos o Contexto (é a 'tomada' onde os componentes vão ligar)
 const AuthContext = createContext<AuthContextType>({} as AuthContextType);
 
-// 3. O Provider (O 'envelope' que discutimos antes)
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [errorModal, setErrorModal] = useState({
+    isOpen: false,
+    message: ""
+  });
   const router = useRouter();
 
   useEffect(() => { //oninit
@@ -31,14 +33,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       if (token) {
         try {
           const userData = await authService.getMe(token);
-          setUser(userData); 
-        } catch (error) {
-          console.error("Sessão inválida", error);
+          setUser(userData);
+        } catch (error: any) {
+          setErrorModal({
+            isOpen: true,
+            message: error.message || "Sessão invalida"
+          });
           // Se o token expirou, limpamos o cookie
           document.cookie = "grimorium_token=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT;";
         }
       }
-      setLoading(false); 
+      setLoading(false);
     }
 
     reidratarUsuario();
@@ -50,8 +55,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setUser(data);
       document.cookie = `grimorium_token=${data.access_token}; path=/; max-age=86400`;
       router.push("/home");
-    } catch (error) {
-      alert("Erro ao entrar: Verifique suas credenciais.");
+    } catch (error: any) {
+      setErrorModal({
+        isOpen: true,
+        message: error.message || "E-mail ou senha incorretos."
+      });
     }
   };
 
@@ -61,12 +69,31 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     router.push("/login");
   };
 
+  const signup = async (name: string, email: string, pass: string) => {
+    try {
+      const data = await authService.signup(name, email, pass);
+      setUser(data);
+      document.cookie = `grimorium_token=${data.access_token}; path=/; max-age=86400`;
+      router.push("/home");
+    } catch (error: any) {
+      setErrorModal({
+        isOpen: true,
+        message: error.message || "Credenciais invalidas."
+      });
+    }
+  }
+
   return (
-    <AuthContext.Provider value={{ user, login, logout, isAuthenticated: !!user }}>
+    <AuthContext.Provider value={{ user, login, logout, signup, isAuthenticated: !!user }}>
       {children}
+      <Modal
+        isOpen={errorModal.isOpen}
+        onClose={() => setErrorModal({ ...errorModal, isOpen: false })}
+        title="Erro na Autenticação"
+        description={errorModal.message}
+      />
     </AuthContext.Provider>
   );
 }
 
-// 4. O Hook (A forma fácil de injetar isso nos componentes)
 export const useAuth = () => useContext(AuthContext);

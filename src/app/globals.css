@@ -18,6 +18,7 @@
 @theme inline {
   --color-grimorium: #9660B4;
   --color-grimoriumhover: #56246A;
+
   --color-background: var(--background);
   --color-darkerbackground: var(--darkerbackground);
   --color-bginside: var(--bginside);
@@ -32,4 +33,32 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+@utility btn-mistic {
+  @apply rounded-xl text-white transition-all duration-500 border border-white/10;
+  
+  background-image: linear-gradient(
+    90deg,
+    var(--color-grimorium) 0%,
+    var(--color-grimoriumhover) 40%,
+    var(--color-grimoriumhover) 60%,
+    var(--color-grimorium) 100%
+  );
+  
+  background-size: 200% auto;
+  background-position: 0% center;
+  box-shadow: 0 0 20px rgba(var(--grimorium-primary-raw), 0.2);
+
+  &:hover {
+    background-position: 200% center;
+    box-shadow: 0 0 30px rgba(var(--grimorium-primary-raw), 0.4);
+    transform: scale(1.02);
+    animation: mistic-flow 4s linear infinite; 
+  }
+}
+
+@keyframes mistic-flow {
+  from { background-position: 0% center; }
+  to { background-position: 200% center; }
 }

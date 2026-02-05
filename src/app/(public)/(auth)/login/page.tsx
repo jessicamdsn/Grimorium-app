@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useAuth } from "@/src/contexts/AuthContexts";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -21,7 +22,7 @@ export default function LoginPage() {
         className="w-full max-w-md p-8 space-y-6 border bg-background border-zinc-800 rounded-2xl shadow-2xl"
       >
         <Image src="/grimorium-logo.png" alt="Grimorium" width={120} height={120} className="mx-auto my-0" />
-        <p className="text-zinc-400 text-center text-sm">Entre para acessar seu grimório</p>
+        <p className="text-zinc-400 text-center text-sm">Entre para acessar seu Grimório</p>
 
         <div className="space-y-4">
           <div>
@@ -51,10 +52,19 @@ export default function LoginPage() {
 
         <button
           type="submit"
-          className="w-full py-3 bg-grimorium hover:bg-grimoriumhover text-white font-bold rounded-lg shadow-lg shadow-indigo-500/20 transition-all active:scale-95"
+          className="w-full py-3 font-bold btn-mistic active:scale-95"
         >
           Entrar na plataforma
         </button>
+        <p className="text-zinc-400 text-sm text-center">
+          Não possui uma conta?{" "}
+          <Link
+            href="/signup"
+            className="text-grimorium hover:text-grimoriumhover font-semibold transition-colors"
+          >
+            Clique aqui
+          </Link>
+        </p>
       </form>
     </div>
   );

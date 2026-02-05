@@ -4,13 +4,16 @@ import type { NextRequest } from 'next/server';
 
 export function middleware(request: NextRequest) {
   const token = request.cookies.get('grimorium_token')?.value;
-  const isLoginPage = request.nextUrl.pathname === '/login';
+  const { pathname } = request.nextUrl;
 
-  if (!token && !isLoginPage) {
+  const publicRoutes = ['/login', '/signup'];
+  
+  const isPublicRoute = publicRoutes.includes(pathname);
+
+  if (!token && !isPublicRoute) {
     return NextResponse.redirect(new URL('/login', request.url));
   }
-
-  if (token && isLoginPage) {
+  if (token && isPublicRoute) {
     return NextResponse.redirect(new URL('/home', request.url));
   }
 
