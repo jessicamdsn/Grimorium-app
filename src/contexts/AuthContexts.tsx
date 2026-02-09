@@ -4,6 +4,7 @@ import { createContext, useContext, useState, ReactNode, useEffect } from "react
 import { authService } from "@/src/services/authService";
 import { useRouter } from "next/navigation";
 import Modal from "../components/shared/Modal";
+import Toast from "../components/shared/Toast";
 interface AuthContextType {
   user: any;
   login: (email: string, pass: string) => Promise<void>;
@@ -21,6 +22,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     isOpen: false,
     message: ""
   });
+  const [toast, setToast] = useState<{ message: string, type: 'success' | 'error' } | null>(null);
+
+  const showToast = (message: string, type: 'success' | 'error') => {
+    setToast({ message, type });
+    setTimeout(() => setToast(null), 4000);
+  };
   const router = useRouter();
 
   useEffect(() => { //oninit
@@ -56,10 +63,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       document.cookie = `grimorium_token=${data.access_token}; path=/; max-age=86400`;
       router.push("/home");
     } catch (error: any) {
-      setErrorModal({
-        isOpen: true,
-        message: error.message || "E-mail ou senha incorretos."
-      });
+      showToast(error.message || "E-mail ou senha incorretos.", "error");
+      // setErrorModal({
+      //   isOpen: true,
+      //   message: error.message || "E-mail ou senha incorretos."
+      // });
     }
   };
 
@@ -86,6 +94,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   return (
     <AuthContext.Provider value={{ user, login, logout, signup, isAuthenticated: !!user }}>
       {children}
+      {toast && (
+        <Toast 
+          message={toast.message} 
+          type={toast.type} 
+          onClose={() => setToast(null)} 
+        />
+      )}
       <Modal
         isOpen={errorModal.isOpen}
         onClose={() => setErrorModal({ ...errorModal, isOpen: false })}
