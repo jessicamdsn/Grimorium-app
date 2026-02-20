@@ -30,7 +30,7 @@ export default function Modal({
       <div className="relative w-full max-auto max-w-md bg-bginside border border-bgborder p-6 rounded-2xl shadow-2xl animate-in zoom-in-95 duration-200">
         
         <h2 className="text-xl font-bold text-foreground mb-2">{title}</h2>
-        <p className="text-zinc-400 mb-6 leading-relaxed">
+        <p className="text-foreground/70 mb-6 leading-relaxed">
           {description}
         </p>
 
