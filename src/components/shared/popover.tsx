@@ -4,11 +4,16 @@ import { useState, useRef, useEffect } from "react";
 interface PopoverProps {
   label: string;
   children: React.ReactNode;
+  align?: 'left' | 'right';
 }
 
-export default function Popover({ label, children }: PopoverProps) {
+export default function Popover({ label, children, align = 'right' }: Readonly<PopoverProps>) {
   const [show, setShow] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+  const alignClasses = {
+    left: '-left-18',
+    right: '-right-18' // Ajuste o valor conforme sua necessidade
+  };
 
   // Fecha o bloquinho se você clicar fora dele
   useEffect(() => {
@@ -31,9 +36,9 @@ export default function Popover({ label, children }: PopoverProps) {
       </button>
 
       {show && (
-        <div className="absolute -left-18 mt-2 w-48 p-3 rounded-md shadow-lg 
+        <div className={`absolute ${alignClasses[align]} mt-2 w-48 p-3 rounded-md shadow-lg 
                         bg-background border border-bgborder z-50
-                        animate-in fade-in slide-in-from-top-1 duration-200">
+                        animate-in fade-in slide-in-from-top-1 duration-200`}>
           <div className="text-sm text-foreground">
             {children}
           </div>

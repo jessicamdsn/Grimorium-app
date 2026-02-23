@@ -5,7 +5,7 @@ interface ModalProps {
   onClose: () => void;
   title: string;
   description: string;
-  type?: "alert" | "confirm"; // Define se tem 1 ou 2 botões
+  type?: "alert" | "confirm";
   onConfirm?: () => void;      // Função para o botão "Sim"
 }
 
@@ -16,7 +16,7 @@ export default function Modal({
   description, 
   type = "alert", 
   onConfirm 
-}: ModalProps) {
+}: Readonly<ModalProps>) {
   
   if (!isOpen) return null;
 
