@@ -1,6 +1,6 @@
 export default function Card({ titulo, children }: Readonly<{ titulo: string, children: React.ReactNode }>) {
   return (
-    <div className="bg-bginside border border-bgborder p-6 rounded-xl shadow-lg transition-shadow duration-300">
+    <div className="bg-bginside border border-bgborder p-6 rounded-xl shadow-lg transition-shadow duration-300 mb-5">
       <div className="flex items-center justify-between mb-4 border-b border-borderline pb-2">
         <h2 className="text-foreground font-semibold text-lg tracking-tight">
           {titulo}

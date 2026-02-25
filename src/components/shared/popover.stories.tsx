@@ -33,7 +33,7 @@ const meta = {
       const temaClass = context.args.tema === 'dark' ? 'dark' : 'light';
       return (
         <div className={temaClass}>
-           <div className="min-h-62.5 min-w-75 flex items-start justify-center pt-10 px-20 bg-background">
+           <div className="min-h-62.5 min-w-75 flex items-start justify-center pt-10 px-20 bg-background rounded-4xl">
               <Story />
            </div>
         </div>

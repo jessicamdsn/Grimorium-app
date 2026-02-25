@@ -39,7 +39,7 @@ export default function Navbar() {
                 Sair
               </button>
             </Popover>
-            <ThemeToggle />
+            <ThemeToggle type="button" />
           </>
         ) : (
           <div className="flex gap-3 items-center">
