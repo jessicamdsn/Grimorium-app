@@ -31,7 +31,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
   const router = useRouter();
 
-  useEffect(() => { //oninit
+  useEffect(() => {
     async function reidratarUsuario() {
       const token = document.cookie
         .split("; ")
