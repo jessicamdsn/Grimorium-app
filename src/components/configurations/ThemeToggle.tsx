@@ -41,7 +41,7 @@ export default function ThemeToggle({
             className="sr-only peer"
           />
 
-          <div className="w-11 h-6 bg-zinc-700 rounded-full peer 
+          <div className="w-11 h-6 bg-zinc-400/50 rounded-full peer 
           peer-checked:bg-grimorium after:content-[''] after:absolute after:top-0.5 
           after:left-0.5 after:bg-white after:border-gray-300 after:border after:rounded-full 
           after:h-5 after:w-5 after:transition-all peer-checked:after:translate-x-full">

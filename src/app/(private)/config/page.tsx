@@ -1,8 +1,8 @@
 import Card from "@/src/components/shared/Card";
-import SoundSettings from "@/src/components/shared/sounds";
-import AnimationsSettings from "@/src/components/shared/animations";
+import SoundSettings from "@/src/components/configurations/sounds";
+import AnimationsSettings from "@/src/components/configurations/animations";
 
-import ThemeToggle from "@/src/components/shared/ThemeToggle";
+import ThemeToggle from "@/src/components/configurations/ThemeToggle";
 
 
 export default function HomePage() {

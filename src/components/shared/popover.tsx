@@ -11,8 +11,8 @@ export default function Popover({ label, children, align = 'right' }: Readonly<P
   const [show, setShow] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const alignClasses = {
-    left: '-left-18',
-    right: '-right-18' // Ajuste o valor conforme sua necessidade
+    left: '-left-32',
+    right: '-right-18'
   };
 
   // Fecha o bloquinho se você clicar fora dele

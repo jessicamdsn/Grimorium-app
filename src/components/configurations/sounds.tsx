@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function SoundSetting() {
   const [isAudioEnabled, setIsAudioEnabled] = useState(() => {
@@ -11,6 +11,14 @@ export default function SoundSetting() {
     return false;
   });
 
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      audioRef.current = new Audio('/sounds/open_book.mp3');
+      audioRef.current.load();
+    }
+  }, []);
+  
  useEffect(() => {
       localStorage.setItem('grimorium_audio', JSON.stringify(isAudioEnabled));
   }, [isAudioEnabled]);

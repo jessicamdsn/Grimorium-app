@@ -1,18 +1,19 @@
 "use client";
 import { useAuth } from "@/src/contexts/AuthContexts";
-import ThemeToggle from "./ThemeToggle";
+import ThemeToggle from "../configurations/ThemeToggle";
 import Image from "next/image";
-import Popover from "./popover";
-import Modal from "./Modal";
+import Popover from "../shared/popover";
+import Modal from "../shared/Modal";
 import { useState } from "react";
 import Link from "next/link";
+import { User } from "lucide-react";
 
 export default function Navbar() {
-  const { user, logout } = useAuth();
+  const { user, logout, loading } = useAuth();
   const [modalSair, setModalSair] = useState(false);
 
   return (
-    <nav className="h-14 border-b border-bgborder bg-darkerbackground text-foreground flex justify-between items-center px-6 fixed top-0 w-full z-10">
+    <nav className="h-14   bg-darkerbackground text-foreground flex justify-between items-center px-6 fixed top-0 w-full z-10">
       
       <Image 
         src="/grimorium-horizontal-logo.png" 
@@ -21,10 +22,13 @@ export default function Navbar() {
         height={170} 
       />
 
-      <div className="flex gap-5 items-center">
-        {user ? (
+      <div className="flex gap-2.5 items-center">
+        {!loading && (
           <>
-            <Popover label={user.name} align="right">
+            {user ? (
+              <>
+            <User size={18} className="text-grimorium" />
+            <Popover label={user.name} align="left">
               <div className="flex flex-col gap-2">
                 <p className="font-bold text-foreground border-b border-zinc-700 pb-1 mb-1">
                   Minha Conta
@@ -34,12 +38,11 @@ export default function Navbar() {
               </div>
               <button
                 onClick={() => setModalSair(true)}
-                className="mt-2 text-left bg-bginside text-grimorium hover:text-grimorium/50 font-bold"
+                className="mt-2 text-left text-grimorium hover:text-grimorium/50 font-bold cursor-pointer"
               >
                 Sair
               </button>
             </Popover>
-            <ThemeToggle type="button" />
           </>
         ) : (
           <div className="flex gap-3 items-center">
@@ -56,6 +59,8 @@ export default function Navbar() {
               Sign Up
             </Link>
           </div>
+        )}
+        </>
         )}
       </div>
 

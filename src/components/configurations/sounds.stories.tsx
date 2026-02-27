@@ -1,11 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
-import Sidebar from './Sidebar';
+import sounds from '../configurations/sounds';
+import { fn } from 'storybook/test';
 
-type SidebarStoryArgs = React.ComponentProps<typeof Sidebar> & { tema?: 'light' | 'dark' };
+type SoundsStoryArgs = React.ComponentProps<typeof sounds> & { tema?: 'light' | 'dark' };
 
 const meta = {
-  title: 'Shared/Sidebar',
-  component: Sidebar,
+  title: 'Shared/sounds',
+  component: sounds,
   parameters: {
     docs: {
       story: {
@@ -31,10 +32,10 @@ const meta = {
       );
     },
   ],
-} satisfies Meta<SidebarStoryArgs>;
+} satisfies Meta<SoundsStoryArgs>;
 
 export default meta;
-type Story = StoryObj<SidebarStoryArgs>;
+type Story = StoryObj<SoundsStoryArgs>;
 
 export const Default: Story = {
 };

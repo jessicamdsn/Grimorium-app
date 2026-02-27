@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import Navbar from './Navbar';
+import Navbar from '../layout/Navbar';
 import { AuthContext } from "@/src/contexts/AuthContexts";
 
 type NavbarStoryArgs = React.ComponentProps<typeof Navbar> & { 

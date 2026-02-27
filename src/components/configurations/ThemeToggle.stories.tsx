@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
-import ThemeToggle from './ThemeToggle';
+import ThemeToggle from '../configurations/ThemeToggle';
 import { ThemeProvider } from 'next-themes';
 
 type ThemeToggleStoryArgs = React.ComponentProps<typeof ThemeToggle> & { tema?: 'light' | 'dark' };

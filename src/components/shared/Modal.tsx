@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion"; // 1. Importações necessárias
+import { useEffect, useRef, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface ModalProps {
   isOpen: boolean;
@@ -23,8 +23,9 @@ export default function Modal({
 
 const [shouldAnimate, setShouldAnimate] = useState(true);
   const [isClient, setIsClient] = useState(false);
+  const soundOpen = typeof window !== "undefined" ? new Audio('/sounds/open_book.mp3') : null;
+  const soundClose = typeof window !== "undefined" ? new Audio('/sounds/close_book.mp3') : null;
 
-  // 1. Função que lê a verdade do Storage
   const syncSettings = () => {
     const saved = localStorage.getItem('grimorium_animations');
     setShouldAnimate(saved === null ? true : JSON.parse(saved));
@@ -34,24 +35,38 @@ const [shouldAnimate, setShouldAnimate] = useState(true);
     setIsClient(true);
     syncSettings();
 
-    // 2. Fica ouvindo o "grito" do outro componente
     globalThis.addEventListener("storage", syncSettings);
     return () => globalThis.removeEventListener("storage", syncSettings);
   }, []);
 
-  // 3. Som e re-checagem ao abrir
-  useEffect(() => {
-    if (isOpen) {
-      syncSettings();
-      if (localStorage.getItem('grimorium_audio') === 'true') {
-        new Audio('/sounds/open_book.mp3').play().catch(() => {});
+  const wasOpen = useRef(isOpen);
+
+useEffect(() => {
+  const somAtivado = localStorage.getItem('grimorium_audio') === 'true';
+
+  if (somAtivado) {
+    // SE ABRIU:
+    if (isOpen && !wasOpen.current) {
+      if (soundOpen) {
+        soundOpen.currentTime = 0;
+        soundOpen.play().catch(() => {});
+      }
+    } 
+    // SE FECHOU:
+    else if (!isOpen && wasOpen.current) {
+      if (soundClose) {
+        soundClose.currentTime = 0;
+        soundClose.play().catch(() => {});
       }
     }
-  }, [isOpen]);
+  }
+
+  // Atualiza a referência para a próxima mudança
+  wasOpen.current = isOpen;
+}, [isOpen]);
 
   if (!isClient) return null;
 
-  // Variantes para deixar o código limpo e sem erro de lógica
   const variants = {
     hidden: shouldAnimate ? { x: 600, opacity: 0, scaleX: 1.5, skewX: -15 } : { x: 0, opacity: 1 },
     visible: { x: 0, opacity: 1, scaleX: 1, skewX: 0 },
@@ -72,10 +87,10 @@ const [shouldAnimate, setShouldAnimate] = useState(true);
 
           <motion.div
             initial={shouldAnimate ?{ 
-              x: 600,         // Vem da direita, mas não tão longe
+              x: 600,
               opacity: 0, 
-              scaleX: 1.8,    // Ainda estica para parecer fluido
-              skewX: -20,     // Inclinação de onda
+              scaleX: 1.8,
+              skewX: -20,
               borderRadius: "100% 30% 100% 30% / 100% 30% 100% 30%" 
             }:{}}
             animate={{ 
