@@ -91,12 +91,11 @@ export default function Modal({
               borderRadius: "24px",
             }}
             exit={shouldAnimate ? {
-              x: -600,        // Sai pela esquerda direto
+              x: -600,
               opacity: 0,
               skewX: 20
             } : { opacity: 0 }}
             transition={{
-              // Trocamos 'spring' por 'easeOut' para ele não quicar/voltar
               type: "tween",
               ease: "easeOut",
               duration: shouldAnimate ? 0.5 : 0

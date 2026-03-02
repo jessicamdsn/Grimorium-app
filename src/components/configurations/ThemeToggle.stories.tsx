@@ -5,7 +5,7 @@ import { ThemeProvider } from 'next-themes';
 type ThemeToggleStoryArgs = React.ComponentProps<typeof ThemeToggle> & { tema?: 'light' | 'dark' };
 
 const meta = {
-  title: 'Shared/ThemeToggle',
+  title: 'Config/ThemeToggle',
   component: ThemeToggle,
   parameters: {
     layout: "centered"

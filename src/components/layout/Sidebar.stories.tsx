@@ -4,7 +4,7 @@ import Sidebar from '../layout/Sidebar';
 type SidebarStoryArgs = React.ComponentProps<typeof Sidebar> & { tema?: 'light' | 'dark' };
 
 const meta = {
-  title: 'Shared/Sidebar',
+  title: 'Layout/Sidebar',
   component: Sidebar,
   parameters: {
     docs: {

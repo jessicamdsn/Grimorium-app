@@ -7,6 +7,7 @@
   --bgborder: #dfdede44;
   --borderline: #dfdede;
   --bginside: #EDE8EF;
+  --pulse: #f3f3f3;
 }
 .dark {
   --background: #191622;
@@ -15,6 +16,7 @@
   --bgborder: #1f1f1f;
   --borderline: #383838;
   --bginside: #25242F;
+  --pulse: #1a1818;
 }
 
 @theme inline {
@@ -28,6 +30,7 @@
   --color-bgborder: var(--bgborder);
   --color-borderline: var(--borderline);
   --color-foreground: var(--foreground);
+  --color-pulse: var(--pulse);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
@@ -42,7 +45,6 @@ body {
   @apply fixed bottom-5 right-5 z-100 flex items-center gap-3 px-6 py-4 rounded-xl 
          bg-bginside border border-white/10 shadow-2xl transition-all duration-300;
   
-  /* A bordinha de baixo com o seu gradiente */
   &::after {
     content: '';
     @apply absolute bottom-0 left-1/2 -translate-x-1/2 h-[2px] w-[80%] rounded-full;
@@ -50,7 +52,6 @@ body {
   }
 }
 
-/* Animação de entrada (surge da direita) */
 @keyframes slide-in-right {
   from { transform: translateX(100%); opacity: 0; }
   to { transform: translateX(0); opacity: 1; }
@@ -95,25 +96,20 @@ body {
 
   @keyframes mistic-pulse {
     0%, 100% {
-      box-shadow: 0 0 15px 2px rgba(150, 96, 180, 0.3), 0 0 30px 5px rgba(150, 96, 180, 0.1);
+      box-shadow: 0 0 15px 2px rgba(0, 0, 0, 0.3), 0 0 30px 5px rgba(0, 0, 0, 0.1);
     }
     50% {
-      box-shadow: 0 0 25px 5px rgba(150, 96, 180, 0.6), 0 0 50px 10px rgba(150, 96, 180, 0.3);
+      box-shadow: 0 0 25px 5px rgba(0, 0, 0, 0.2), 0 0 50px 10px rgba(0, 0, 0, 0.3)
     }
   }
 }
 
 @theme inline {
-  --shadow-mistic: 0 0 20px 2px rgba(150, 96, 180, 0.7), 
-                   0 0 45px 10px rgba(150, 96, 180, 0.4),
-                   0 0 80px 20px rgba(150, 96, 180, 0.2);
+  --shadow-mistic: 0 0 15px 0px rgba(150, 96, 180, 0.3), 
+                   0 0 30px 0px rgba(150, 96, 180, 0.2);
 }
 
 @utility shadow-mistic {
   box-shadow: var(--shadow-mistic);
 }
 
-/* Força a classe a funcionar mesmo em Hover */
-.hover\:shadow-mistic:hover {
-  box-shadow: var(--shadow-mistic) !important;
-}

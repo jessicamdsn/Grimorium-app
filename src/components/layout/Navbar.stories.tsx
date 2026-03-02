@@ -8,7 +8,7 @@ type NavbarStoryArgs = React.ComponentProps<typeof Navbar> & {
 };
 
 const meta = {
-  title: 'Shared/Navbar',
+  title: 'Layout/Navbar',
   component: Navbar,
   parameters: {
     layout: 'fullscreen',
@@ -34,7 +34,8 @@ const meta = {
       return (
         <div className={temaClass}>
             <AuthContext.Provider value={{ 
-            user: args.user, 
+            user: args.user,
+            loading: false,
             logout: () => {},
             login: async () => {},
             signup: async () => {},
